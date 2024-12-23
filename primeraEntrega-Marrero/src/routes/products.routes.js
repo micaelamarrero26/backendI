@@ -1,115 +1,113 @@
-import { productService } from "../services/products.service.js";
+import { productService } from "../services/product.service.js";
 import { validate as uuidValidate } from "uuid";
 
 import { Router } from "express";
 
-export const productsRouter = Router();
+export const productRouter = Router();
 
-productsRouter.get("/", async (req, res) => {
-    const products = await productService.getProducts();
-    res.status(200).json(products);
-});
-
-productsRouter.get("/:pid", async (req, res) => {
-    const { pid } = req.params;
-
-    const product = await productService.getProductById(pid);
-
-    if (!pid) {
-        return res.status(404).json({ message: "Debe ingresar un id de producto" });
+productRouter.get("/", async (req, res) => {
+    const products = await productService.getAll();
+    if (products.length === 0) {
+        return res.status(200).json({ message: "No product in the database" });
     }
 
+    return res.status(200).json(products);
+});
+
+productRouter.get("/:pid", async (req, res) => {
+    const { pid } = req.params;
+
+    const product = await productService.getById(pid);
+
+    if (!pid) {
+        return res.status(404).json({ message: "Please provide a product ID" });
+    }
+
+ 
+
     if (!uuidValidate(pid)) {
-        return res.status(400).json({ message: "El id ingresado tiene un formato invalido" });
+        return res.status(400).json({ message: "The provided cart ID format is invalid" });
     }
 
     if(!product) {
-        return res.status(404).json({ error: `Producto con id: ${req.params.pid} no encontrado` });
+        return res.status(404).json({ error: `Product with id: ${req.params.pid} no found` });
     }
 
     res.status(200).json(product);
 });
 
-productsRouter.post("/", async (req, res) => {
+productRouter.post("/", async (req, res) => {
     const { title, description, code, price, status, stock, category, thumbnail } = req.body;
 
     if (!title || !description || !code || !price || !stock || !category) {
-        return res.status(400).json({ message: "Todos los campos son obligatorios, excepto thumbnail" });
+        return res.status(400).json({ message: "All fields are required, except for the thumbnail." });
     }
 
     try{
-        const product = await productService.createProduct({ title, description, code, price, status, stock, category, thumbnail});
+        const product = await productService.create({ title, description, code, price, status, stock, category, thumbnail});
         
         res.status(201).json(product);
 
     } catch(error) {
-        res.status(500).json({ message: "Error al crear el producto" });
+        return res.status(500).json({ errors: error.message });
     }
 
 });
 
 
-productsRouter.put("/:pid", async (req, res) => {
+productRouter.put("/:pid", async (req, res) => {
     const { pid } = req.params;
     const { title, description, code, price, status, stock, category, thumbnail } = req.body;
 
-    console.log("Datos recibidos:", pid, title, description, code, price, status, stock, category, thumbnail);
-
     if (!pid) {
-        return res.status(404).json({ message: "Debe ingresar un id de producto" });
+        return res.status(404).json({ message: "Please provide a product ID" });
     }
 
     if (!uuidValidate(pid)) {
-        return res.status(400).json({ message: "El id ingresado tiene un formato invalido" });
+        return res.status(400).json({ message: "The provided cart ID format is invalid" });
     }
 
-    if (!title || !description || !price || !code || !stock) {
-        return res.status(400).json({ message: "Todos los campos son obligatorios, excepto thumbnail" });
+    if (!title || !description || !code || !price || !stock || !category) {
+        return res.status(400).json({ message: "All fields are required, except for the thumbnail." });
     }
 
     try {
-        const product = await productService.updateProduct({ id: pid, title, description, code, price, status, stock, category, thumbnail });
+        const product = await productService.update({ id: pid, title, description, code, price, status, stock, category, thumbnail });
 
         if (!product) {
-            return res.status(404).json({ error: `Producto con id: ${req.params.pid} no encontrado` });
+            return res.status(404).json({ error: `Product with id: ${req.params.pid} no found` });
         }
 
         res.status(200).json({
-            message: `El producto con id: ${pid} fue actualizado correctamente.`
+            message: `Successfully updated product with ID: ${pid}`
         });
 
     } catch (error)  {
-        if (error.message.includes("404")) {
-            return res.status(404).json({ error: `Product with ID: ${req.params.pid} not found` });
-          }
           return res.status(500).json({ errors: error.message });
     }
 });
 
-productsRouter.delete("/:pid", async (req, res) => {
+productRouter.delete("/:pid", async (req, res) => {
     const { pid } = req.params;
 
     if (!pid) {
-        return res.status(404).json({ message: "Debe ingresar un id de producto" });
+        return res.status(404).json({ message: "Please provide a product ID" });
     }
 
     if (!uuidValidate(pid)) {
-        return res.status(400).json({ message: "El id ingresado tiene un formato invalido" });
+        return res.status(400).json({ message: "The provided cart ID format is invalid" });
     }
 
     try{
-        const product = await productService.deleteProduct(pid);
+        const product = await productService.delete(pid);
         if (!product)
-            return res.status(404).json({ error: `Producto con id: ${req.params.pid} no encontrado` });
+            return res.status(404).json({ error: `Product with id: ${req.params.pid} no found` });
 
         res.status(200).json({
-            message: `El producto con id: ${pid} fue eliminado correctamente.`,
-            product: product
-          });
+            message: `Successfully deleted product with ID: ${pid}`
 
+          });
     } catch(error) {
           return res.status(500).json({ errors: error.message });
     }
 });
-
-

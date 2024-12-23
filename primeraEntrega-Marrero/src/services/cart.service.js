@@ -1,10 +1,10 @@
 import fs from "node:fs";
 import { v4 as uuidv4 } from "uuid";
-import { productService } from "./products.service.js";
+import { productService } from "./product.service.js";
 
-class CartsService {
+class CartService {
     path;
-    carts;
+    carts = [];
 
     constructor({ path }) {
         this.path = path;
@@ -19,13 +19,15 @@ class CartsService {
         }
     }
 
-    // Obtener un carrito por ID
-    async getCartsById(cid) {
+    async getAll() {
+        return this.carts;
+    }
+
+    async getById(cid) {
         return this.carts.find(cart => cart.id === cid);
     }
 
-    // Crear un nuevo carrito
-    async createCart() {
+    async create() {
         const id = uuidv4();
 
         const cart = {
@@ -37,27 +39,34 @@ class CartsService {
 
         try {
             await this.saveOnFile();
-            return cart;
+            return cart.id;
+
         } catch (error) {
-            console.log(`Error al guardar el archivo: ${error}`);
-            throw error;
+            console.error(`An error occurred while saving the file: ${error.message}`);
         }
     }
 
     async addProductToCart(cid, pid) {
-        const product = await productService.getProductById(pid);
-        if (!product) {
-            throw new Error("Producto no encontrado");
+        const product = await productService.getById(pid);
+
+        if(!product) {
+            return null;
         }
 
         const cart = this.carts.find(cart => cart.id === cid);
-        if (!cart) {
-            throw new Error("Carrito no encontrado");
+        
+        console.log(cart)
+
+
+        if(!cart) {
+            return null;
         }
+
 
         const productInCart = cart.products.find(item => item.product === pid);
 
         if (productInCart) {
+            console.log(`Product already in cart, increasing quantity`);
             productInCart.quantity += 1;
         } else {
             cart.products.push({
@@ -70,21 +79,19 @@ class CartsService {
             await this.saveOnFile();
             return cart;
         } catch (error) {
-            console.log(`Error al guardar el archivo: ${error}`);
-            throw error;
+            console.error(`An error occurred while saving the file: ${error.message}`);
         }
     }
 
-    // Guardar los cambios en el archivo
     async saveOnFile() {
         try {
             await fs.promises.writeFile(this.path, JSON.stringify(this.carts, null, 2));
         } catch (error) {
-            console.log(`Error al guardar el archivo: ${error}`);
+            console.error(`An error occurred while saving the file: ${error.message}`);
         }
     }
 }
 
-export const cartService = new CartsService({
+export const cartService = new CartService({
     path: "./src/db/carts.json",
 });

@@ -1,24 +1,12 @@
 [
   {
-    "id": "5140b1d0-dcb2-40f2-bb04-7b07d289dd2d",
-    "title": "Licuadora2",
-    "description": "Bate que bate",
-    "code": "AAA1234",
-    "price": "carajo",
-    "status": "true",
-    "stock": 50,
-    "category": "raro2",
-    "thumbnail": "raro"
-  },
-  {
-    "id": "a7b6d0ac-d3b7-4fb9-832e-7b810b76d4bd",
-    "title": "Microondas",
+    "id": "f1db5e8d-9c74-446f-9c31-b66d6b144add",
+    "title": "Television",
     "description": "Television de 50 pulgadas",
-    "code": "KKKKGG",
-    "price": "20",
+    "code": "ABC1234",
+    "price": "500",
     "status": true,
-    "stock": 50,
-    "category": "raro2",
-    "thumbnail": "raro"
+    "stock": 500,
+    "category": "Multimedia"
   }
 ]
