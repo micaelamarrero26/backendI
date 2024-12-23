@@ -10,16 +10,6 @@
     "category": "IT"
   },
   {
-    "id": "098516a3-a23f-4147-b925-d901ac25753e",
-    "title": "Batidora",
-    "description": "Batidora Puntalk",
-    "code": "ABC122",
-    "price": "300",
-    "status": true,
-    "stock": 5,
-    "category": "Cocina"
-  },
-  {
     "id": "b8b2c03c-c42d-4114-9414-7aac8fadb371",
     "title": "Batidora",
     "description": "Batidora Puntalk",
@@ -30,13 +20,23 @@
     "category": "Cocina"
   },
   {
-    "id": "fc052402-fedd-4d11-b526-3938cb325c1d",
-    "title": "Batidora",
-    "description": "Batidora Puntalk",
+    "id": "7ee19d76-133e-492a-b60b-d5f270654ac8",
+    "title": "Lavaropa",
+    "description": "Lavaropa Puntalk",
     "code": "ABC122",
-    "price": "300",
+    "price": "1000",
     "status": true,
-    "stock": 5,
-    "category": "Cocina"
+    "stock": 10,
+    "category": "Lavanderia"
+  },
+  {
+    "id": "d306b1a1-02c5-4b2d-a57c-b3b5a3bc9708",
+    "title": "Microfono modificado",
+    "description": "Microfono de otra marca chau",
+    "code": "ABC122",
+    "price": "200",
+    "status": true,
+    "stock": 1,
+    "category": "mica categoria"
   }
 ]

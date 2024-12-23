@@ -67,10 +67,6 @@ productRouter.put("/:pid", async (req, res) => {
         return res.status(400).json({ message: "The provided cart ID format is invalid" });
     }
 
-    if (!title || !description || !code || !price || !stock || !category) {
-        return res.status(400).json({ message: "All fields are required, except for the thumbnail." });
-    }
-
     try {
         const product = await productService.update({ id: pid, title, description, code, price, status, stock, category, thumbnail });
 

@@ -7,6 +7,11 @@ export const cartRouter = Router();
 cartRouter.get("/", async (req, res) => {
     try {
         const carts = await cartService.getAll();
+
+        if (carts.length === 0) {
+            return res.status(200).json({ message: "No product in the database" });
+        }
+    
         res.status(200).json(carts);
     } catch (error) {
         return res.status(500).json({ errors: error.message });
@@ -28,7 +33,7 @@ cartRouter.get("/:cid", async (req, res) => {
         }
     
         if(!cart) {
-            return res.status(404).json({ error: `Cart with id: ${req.params.pid} no found` });
+            return res.status(404).json({ error: `Cart with id: ${req.params.cid} no found` });
         }
 
         if (cart.products.length === 0) {
