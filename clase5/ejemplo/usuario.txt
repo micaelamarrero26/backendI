@@ -1,0 +1,18 @@
+[
+  {
+    "nombre": "Micaela",
+    "edad": 28,
+    "profesion": "Desarrolladora"
+  },
+  {
+    "nombre": "Juan",
+    "edad": 30,
+    "profesion": "Desarrollador"
+  },
+  {
+    "nombre": "Luis",
+    "edad": 35,
+    "profesion": "Desarrollador"
+  }
+]
+Hasta luego nuevo usuario
