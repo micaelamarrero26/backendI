@@ -1,12 +1,42 @@
 [
   {
-    "id": "f1db5e8d-9c74-446f-9c31-b66d6b144add",
-    "title": "Television",
-    "description": "Television de 50 pulgadas",
-    "code": "ABC1234",
-    "price": "500",
+    "id": "fe8ca65d-46a5-47ff-8e0e-88e293dc93cf",
+    "title": "Computadora",
+    "description": "Computadora intel",
+    "code": "ABC1122",
+    "price": "1000",
     "status": true,
-    "stock": 500,
-    "category": "Multimedia"
+    "stock": 10,
+    "category": "IT"
+  },
+  {
+    "id": "098516a3-a23f-4147-b925-d901ac25753e",
+    "title": "Batidora",
+    "description": "Batidora Puntalk",
+    "code": "ABC122",
+    "price": "300",
+    "status": true,
+    "stock": 5,
+    "category": "Cocina"
+  },
+  {
+    "id": "b8b2c03c-c42d-4114-9414-7aac8fadb371",
+    "title": "Batidora",
+    "description": "Batidora Puntalk",
+    "code": "ABC122",
+    "price": "300",
+    "status": true,
+    "stock": 5,
+    "category": "Cocina"
+  },
+  {
+    "id": "fc052402-fedd-4d11-b526-3938cb325c1d",
+    "title": "Batidora",
+    "description": "Batidora Puntalk",
+    "code": "ABC122",
+    "price": "300",
+    "status": true,
+    "stock": 5,
+    "category": "Cocina"
   }
 ]

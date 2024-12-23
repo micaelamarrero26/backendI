@@ -100,6 +100,7 @@ productRouter.delete("/:pid", async (req, res) => {
 
     try{
         const product = await productService.delete(pid);
+
         if (!product)
             return res.status(404).json({ error: `Product with id: ${req.params.pid} no found` });
 

@@ -103,10 +103,12 @@ class ProductService {
         }
     }
 
-    async delete({ id } ) {
+    async delete( id ) {
 
         const product = this.products.find((prod) => prod.id === id);
         
+        console.log(product);
+
         if (!product) return null;
         
         const index = this.products.findIndex(prod => prod.id === id);
