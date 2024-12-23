@@ -34,7 +34,7 @@ async getProductById(id) {
 }
 
 
-async createProduct(
+async createProduct({
     title,
     description,
     code,
@@ -42,8 +42,8 @@ async createProduct(
     status = true,
     stock,
     category,
-    thumbnail
-){
+    thumbnail,
+}){
     const id = uuidv4();
 
     const product = {
@@ -59,6 +59,7 @@ async createProduct(
     };
 
     this.products.push(product);
+
     try{
         this.saveOnFile();
         return product;
@@ -68,21 +69,26 @@ async createProduct(
     }
 }
 
-async updateProduct(
+async updateProduct({
     id,
     title,
     description,
     code,
     price,
-    status = true,
+    status,
     stock,
     category,
-    thumbnail
-){
-    const product = this.getProductById(id);
+    thumbnail,
+}){
+    console.log(id);
+    const product = this.products.find((product) => product.id === id);
+
+    console.log(product);
+
     if(!product) {
         return null;
     }
+
     product.title = title ?? product.title;
     product.description = description ?? product.description;
     product.code = code ?? product.code;
@@ -105,12 +111,14 @@ async updateProduct(
 }
 
 deleteProduct({ id } ) {
-    const product = this.getProductById(id);
-    if(!product) {
-        return null;
-    }
 
+    const product = this.products.find((prod) => prod.id === id);
+    
+    if (!product)
+        return null;
+    
     const index = this.products.findIndex(prod => prod.id === id);
+
     this.products.splice(index, 1);
 
     try{
@@ -125,7 +133,7 @@ deleteProduct({ id } ) {
 async saveOnFile() {
 
     try{
-        await fs.promises.writeFileSync(this.path, JSON.stringify(this.products, null, 2));
+        await fs.promises.writeFile(this.path, JSON.stringify(this.products, null, 2));
     } catch(error) {
         console.log(`Error al guardar el archivo: ${error}`);
     }
@@ -133,4 +141,7 @@ async saveOnFile() {
 
 }
 
-export default new ProductService({ path: "./src/db/products.json" });
+
+export const productService = new ProductService({
+    path: "./src/db/products.json",
+  });
