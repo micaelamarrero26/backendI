@@ -1,0 +1,37 @@
+    {{#if esAdmin}} 
+    <h1>
+      Esta pagina es para administradores
+    </h1>
+
+     <table>
+        <thead>
+          <tr>
+              <th>Id</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {{#each datos }}
+          <tr>
+            <td>{{ this.id }}</td>
+            <td>{{ this.name }}</td>
+            <td>{{ this.email }}</td>
+            <td>
+              <a class="btn-large waves-effect waves-light red" href="/delete/{{ this.id }}">
+              Delete
+              </a>
+            </td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    {{else}}
+    <h1>
+      Esta pagina es para usuarios normales
+    </h1>
+    {{/if}}
+
+<script src="/public/js/protected.js"></script>
